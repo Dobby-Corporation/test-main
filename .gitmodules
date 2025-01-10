@@ -1,0 +1,3 @@
+[submodule "test-bot"]
+	path = test-bot
+	url = https://github.com/Dobby-Corporation/test-bot.git

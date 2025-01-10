@@ -2,9 +2,9 @@
 	path = test-backend
 	url = https://github.com/Dobby-Corporation/test-backend.git
 
-[submodule "test-frontend"]
+[submodule "test-client"]
 	path = test-frontend
-	url = https://github.com/Dobby-Corporation/test-frontend.git
+	url = https://github.com/Dobby-Corporation/test-client.git
 
 [submodule "test-bot"]
 	path = test-bot
