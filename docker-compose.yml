@@ -1,0 +1,14 @@
+services:
+  stocks-api:
+    build: ./test-backend
+    volumes:
+      - "./test-backend/.env:/app/.env"
+      - "./test-backend/test_booster/settings.py:/app/test_booster/settings.py"
+    ports:
+      - "8000:8000"
+
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
