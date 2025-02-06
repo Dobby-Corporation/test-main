@@ -1,11 +1,23 @@
 services:
-  stocks-api:
+  backend:
     build: ./test-backend
     volumes:
       - "./test-backend/.env:/app/.env"
       - "./test-backend/test_booster/settings.py:/app/test_booster/settings.py"
     ports:
       - "8000:8000"
+    depends_on:
+      - pgdb
+
+  pgdb:
+    image: postgres
+    container_name: pgdb
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
 
 networks:
   default:
