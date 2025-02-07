@@ -1,4 +1,11 @@
 services:
+  bot:
+    build: ./test-bot
+    volumes:
+      - "./test-bot/.env:/app/.env"
+    depends_on:
+      - "pgdb-bot"
+
   backend:
     build: ./test-backend
     volumes:
@@ -6,7 +13,23 @@ services:
     ports:
       - "80:8000"
     depends_on:
-      - pgdb
+      - "pgdb"
+
+  pgdb-bot:
+    image: postgres
+    container_name: "pgdb-bot"
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      PGUSER: "postgres"
+    volumes:
+      - ./pgdata-bot:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 1s
+      timeout: 5s
+      retries: 5
 
   pgdb:
     image: postgres
@@ -15,8 +38,14 @@ services:
       POSTGRES_DB: "postgres"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
+      PGUSER: "postgres"
     volumes:
       - ./pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 1s
+      timeout: 5s
+      retries: 5
 
 networks:
   default:
